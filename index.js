@@ -392,15 +392,15 @@ function action(socketId) {
     if (room.gameState.result.status == Statuses.PLAYING && room.gameState.currentPlayer.id == socketId) {
       const player = room.gameState.players.find(p => p.id == socketId);
       console.log(player)
-      if (player == room.gameState.flippedPlayer) {
-        var fshkjdfh = data.gridIndex[1]
-      }
-      if (player != room.gameState.flippedPlayer) {
-        var fshkjdfh = data.gridIndex[0]
-      }
-      if (room.gameState.board[Number(fshkjdfh)] == null) {
-        room.gameState.board[Number(fshkjdfh)] = player;
-
+      // if (player == room.gameState.flippedPlayer) {
+      //   var fshkjdfh = data.gridIndex[1]
+      // }
+      // if (player != room.gameState.flippedPlayer) {
+      //   var fshkjdfh = data.gridIndex[0]
+      // }
+      if (room.gameState.board[data.gridIndex] == null) {
+        room.gameState.board[ data.gridIndex] = player;
+        console.log(room.gameState.board);
         for (const key in room.gameState.board) {
           if (room.gameState.board[key] == player) {
             console.log('=====================================================================')
