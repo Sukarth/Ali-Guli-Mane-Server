@@ -4,7 +4,7 @@ const sockets = require('socket.io')
 const server = http.createServer();
 const io = sockets(server, {
   cors: {
-    origin: "https://v9djdb27-3000.euw.devtunnels.ms/",
+    origin: "https://v9djdb27-5500.euw.devtunnels.ms",
     methods: ["GET", "POST"]
   }
 });
@@ -42,8 +42,8 @@ let gameState = {
 var rooms = {};
 var roomCount = 0;
 
-var thisGameId = (Math.random() * 100000) | 0;
-var roomId;
+// var thisGameId = (Math.random() * 100000) | 0;
+// var roomId;
 
 var slotsValues = {
   "1": "5",
@@ -256,121 +256,732 @@ function getPlayer(socketId) {
 
 
 
-function calculateBoard(slot, value) {
-  // var NewSlotsValues = slotsValues
-  // var NextSlot = key + NewSlotsValues[key] + 1
-  // while (NextSlot>14){
-  //   Nextslot = Nextslot-14
-  // }
+// function calculateBoard(slot, value) {
+//   // var NewSlotsValues = slotsValues
+//   // var NextSlot = key + NewSlotsValues[key] + 1
+//   // while (NextSlot>14){
+//   //   Nextslot = Nextslot-14
+//   // }
 
-  // gems_earned = NewSlotsValues[NextSlot]
-  // NewSlotsValues[key] = 0
-  // while (gems_earned != 0) {
+//   // gems_earned = NewSlotsValues[NextSlot]
+//   // NewSlotsValues[key] = 0
+//   // while (gems_earned != 0) {
 
-  // }
+//   // }
 
-  var new_slots_values = {
-    "1": "5",
-    "2": "5",
-    "3": "5",
-    "4": "5",
-    "5": "5",
-    "6": "5",
-    "7": "5",
-    "8": "5",
-    "9": "5",
-    "10": "5",
-    "11": "5",
-    "12": "5",
-    "13": "5",
-    "14": "5"
-  };
+//   var new_slots_values = {
+//     "1": "5",
+//     "2": "5",
+//     "3": "5",
+//     "4": "5",
+//     "5": "5",
+//     "6": "5",
+//     "7": "5",
+//     "8": "5",
+//     "9": "5",
+//     "10": "5",
+//     "11": "5",
+//     "12": "5",
+//     "13": "5",
+//     "14": "5"
+//   };
 
-  // console.log('hi')
+//   let x;
+//   let y;
+//                                                                                         // let pre_slot;
+//   let old_slot_emptied; 
+//   // let slot_emptied  = Number(slot) + Number(value) + 1;
+//   // console.log('hi')
+//   // var counterrrr = 1
+//   new_slots_values[slot] = "0";
+//   console.log(slot)
+//   var pre_slot = Number(slot)
+//   // console.log(pre_slot)
+//   var slot_emptied = Number(slot) + Number(value) + 1
+//   // console.log(slot_emptied)
+// //   new_slots_values[slot] = "0";
 
-  new_slots_values[slot] = "0";
-  console.log(slot)
-  var pre_slot = Number(slot)
-  // console.log(pre_slot)
-  var slot_emptied = Number(slot) + Number(value) + 1
-  // console.log(slot_emptied)
-  for (const [slott, valued] of Object.entries(new_slots_values)) {
 
-    if (pre_slot < parseInt(slott) && parseInt(slott) < slot_emptied) {
-      // console.log('dddddddddddddddddddddddddddddddddddddd')
-      // console.log(slott)
-      // console.log(valued)
-      var thtg = parseInt(valued) + 1
-      new_slots_values[slott] = thtg.toString()
-    }
+// //   while (new_slots_values[slot_emptied] != "0") {
 
-    else {
+// //     x = Number(slot)+1
+// //     y = slot_emptied-1
 
-      // console.log('ggggggggg')
-      continue
-    }
-  }
-  // console.log('bi')
-  if (slot_emptied > 14) {
-    slot_emptied = slot_emptied - 14
-  }
-  // console.log('ai')
-  // slot_emptied = slot_emptied.toString()
-  var gems_earned = parseInt(slotsValues[slot_emptied.toString()])
-  // var slot_emptiedd = slot_emptied.toString()
+// //     for (var i = x; i <= y; i++) {
+// //       new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+// //     }
+    
+// //     old_slot_emptied = slot_emptied
+// //     slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1  
+// //     new_slots_values[old_slot_emptied] = "0";
+// // }
 
-  new_slots_values[slot_emptied.toString()] = "0"
 
-  // console.log('ti')
-  while (gems_earned != 0) {
-    pre_slot = slot_emptied
-    slot_emptied = slot_emptied + gems_earned + 1
 
-    // console.log('fi')
-    for (const [slobt, valuet] of Object.entries(new_slots_values)) {
-      // console.log('aaaa')
-      if (pre_slot < parseInt(slobt) && parseInt(slobt) < slot_emptied) {
-        var thttg = parseInt(valuet) + 1
-        // console.log(thttg)
-        // console.log(slobt)
-        // console.log(valuet)
-        // console.log(new_slots_values[slot])
-        // console.log(new_slots_values.slot)
-        // console.log("--------------")
-        new_slots_values[slobt] = thttg.toString()
-        // console.log(new_slots_values[slobt])
-      }
 
-    }
 
-    while (slot_emptied > 14) {
-      slot_emptied = slot_emptied - 14
-      // console.log('TTTTTi')
-    }
 
-    // console.log('DDDi')
-    // slot_emptied = slot_emptied.toString()
-    gems_earned = parseInt(new_slots_values[slot_emptied.toString()])
-    // above line???????????????????????????????????????????????????????????
-    // slot_emptied = slot_emptied.toString()
-    new_slots_values[slot_emptied.toString()] = "0"
 
-  }
 
-  if (gems_earned == 0) {
 
-    var slot_taken = slot_emptied + 1
-    if (slot_taken > 14) {
-      slot_taken = slot_taken - 14
-    }
-    // slot_taken = slot_taken.toString()
-    gems_earned = new_slots_values[slot_taken.toString()]
-    new_slots_values[slot_taken.toString()] = "0"
-    return [new_slots_values, gems_earned]
 
-  }
 
-}
+
+
+
+
+
+
+
+
+//   for (const [slott, valued] of Object.entries(new_slots_values)) {
+
+//     if (pre_slot < parseInt(slott) && parseInt(slott) < slot_emptied) {
+//       // console.log('dddddddddddddddddddddddddddddddddddddd')
+//       // console.log(slott)
+//       // console.log(valued)
+//       var thtg = parseInt(valued) + 1
+//       new_slots_values[slott] = thtg.toString()
+//     }
+//     // else if (pre_slot == parseInt(slott) && parseInt(slott) < slot_emptied) {
+
+//     // }
+
+//     else {
+
+//       // console.log('ggggggggg')
+//       continue
+//     }
+
+//     // counterrrr = counterrrr + 1
+//   }
+//   // console.log('bi')
+//   if (slot_emptied > 14) {
+//     slot_emptied = slot_emptied - 14
+//   }
+//   // console.log('ai')
+//   // slot_emptied = slot_emptied.toString()
+//   var gems_earned = parseInt(slotsValues[slot_emptied.toString()])
+//   // var slot_emptiedd = slot_emptied.toString()
+
+//   new_slots_values[slot_emptied.toString()] = "0"
+
+//   // console.log('ti')
+//   while (gems_earned != 0) {
+//     pre_slot = slot_emptied
+//     slot_emptied = slot_emptied + gems_earned + 1
+
+//     // console.log('fi')
+//     for (const [slobt, valuet] of Object.entries(new_slots_values)) {
+//       // console.log('aaaa')
+//       if (pre_slot < parseInt(slobt) && parseInt(slobt) < slot_emptied) {
+//         var thttg = parseInt(valuet) + 1
+//         // console.log(thttg)
+//         // console.log(slobt)
+//         // console.log(valuet)
+//         // console.log(new_slots_values[slot])
+//         // console.log(new_slots_values.slot)
+//         // console.log("--------------")
+//         new_slots_values[slobt] = thttg.toString()
+//         // console.log(new_slots_values[slobt])
+//       }
+
+//     }
+
+//     while (slot_emptied > 14) {
+//       slot_emptied = slot_emptied - 14
+//       // console.log('TTTTTi')
+//     }
+
+//     // console.log('DDDi')
+//     // slot_emptied = slot_emptied.toString()
+//     gems_earned = parseInt(new_slots_values[slot_emptied.toString()])
+//     // above line???????????????????????????????????????????????????????????
+//     // slot_emptied = slot_emptied.toString()
+//     new_slots_values[slot_emptied.toString()] = "0"
+
+//   }
+
+//   if (gems_earned == 0) {
+
+//     var slot_taken = slot_emptied + 1
+//     if (slot_taken > 14) {
+//       slot_taken = slot_taken - 14
+//     }
+//     // slot_taken = slot_taken.toString()
+//     gems_earned = new_slots_values[slot_taken.toString()]
+//     new_slots_values[slot_taken.toString()] = "0"
+//     return [new_slots_values, gems_earned]
+
+//   }
+
+// }
+
+
+
+
+
+// function calculateBoard(slot, neww_slots_values) {
+//   var new_slots_values = neww_slots_values
+//   // var new_slots_values = {
+//   //   "1": "5",
+//   //   "2": "5",
+//   //   "3": "5",
+//   //   "4": "5",
+//   //   "5": "5",
+//   //   "6": "5",
+//   //   "7": "5",
+//   //   "8": "5",
+//   //   "9": "5",
+//   //   "10": "5",
+//   //   "11": "5",
+//   //   "12": "5",
+//   //   "13": "5",
+//   //   "14": "5"
+//   // };
+
+//   let x;
+//   let y;
+//   let counterrrrrrr = 1;
+//                                                                                         // let pre_slot;
+//   let old_slot_emptied; 
+//   let slot_emptiedd = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   let slot_emptied = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   let slot_emptieddd = slot_emptiedd
+//   new_slots_values[slot] = "0";
+
+//   while (slot_emptied > 14) {
+//       slot_emptied -= 14;
+//   }
+//   while (slot_emptiedd > 14) {
+//       slot_emptiedd -= 14;
+//   }
+
+//   while (new_slots_values[slot_emptiedd] != "0") {
+
+//       if (counterrrrrrr == 1){
+//           x = Number(slot)+1
+//           y = slot_emptied-1
+//       }
+//       // else if (counterrrrrrr == 2){
+//       //     x = slot_emptied+1
+//       //     y = slot_emptied + Number(slot)
+//       //     slot_emptied = y+1
+//       // }
+//       else{
+//           x = slot_emptied+1
+//           y = slot_emptied + Number(slot)
+//           slot_emptied = y+1
+//       }
+
+//       // while (y > 14) {
+//       //     y = y - 14
+//       //     slot_emptied = y+1
+//       // } 
+//       while (x > 14) {
+//           x = x - 14
+//           // slot_emptied = y+1
+//       } 
+
+//       for (var i = x; i <= y; i++) {
+//         new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//             let numKey = parseInt(key);
+//             new_slots_values[key] = "0";
+//             let newKey = (numKey - 14).toString();
+//             new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//             delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptied = y+1
+//       } 
+      
+//       // old_slot_emptied = slot_emptied
+//       // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//       if (slot_emptied > 14) {
+//           slot_emptied = slot_emptied - 14
+//       } 
+//       var slot = new_slots_values[slot_emptied]
+//       new_slots_values[slot_emptied] = "0";
+      
+//       slot_emptiedd = slot_emptied + Number(slot) + 1
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd -14
+//       }
+//       // value=new_slots_values[slot_emptied]
+//       counterrrrrrr = counterrrrrrr + 1; 
+//   }
+
+//   if (counterrrrrrr != 1){
+//     x = slot_emptied+1
+//     y = slot_emptied + Number(slot)
+//     slot_emptied = y+1
+
+
+//     while (x > 14) {
+//         x = x - 14
+//         // slot_emptied = y+1
+//     } 
+
+//     for (var i = x; i <= y; i++) {
+//       new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//     }
+
+//     for (let key in new_slots_values) {
+//         if (new_slots_values[key] === "NaN") {
+//           let numKey = parseInt(key);
+//           new_slots_values[key] = "0";
+//           let newKey = (numKey - 14).toString();
+//           new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//           delete new_slots_values[key];
+//         }
+//     }
+
+//     while (y > 14) {
+//         y = y - 14
+//         slot_emptied = y+1
+//     } 
+
+//     // old_slot_emptied = slot_emptied
+//     // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//     if (slot_emptied > 14) {
+//         slot_emptied = slot_emptied - 14
+//     } 
+//     var slot = new_slots_values[slot_emptied]
+//     new_slots_values[slot_emptied] = "0";
+
+//     slot_emptiedd = slot_emptied + Number(slot) + 1
+//     while (slot_emptiedd >14) {
+//         slot_emptiedd = slot_emptiedd-14
+//     }
+
+
+//     while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+
+
+//     var other_side_slot = 14-slot_emptiedd
+//     var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//     new_slots_values[other_side_slot+1] = "0";
+//     new_slots_values[slot_emptiedd] = "0";
+//   }
+
+//   else {
+
+//       x = Number(slot)+1
+//       y=slot_emptieddd
+
+//       for (var i = x; i <= y; i++) {
+//           new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//               let numKey = parseInt(key);
+//               new_slots_values[key] = "0";
+//               let newKey = (numKey - 14).toString();
+//               new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//               delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptiedd = y+1
+//       } 
+
+
+//       while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+  
+//       var other_side_slot = 14-slot_emptiedd
+//       var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//       new_slots_values[other_side_slot+1] = "0";
+//       new_slots_values[slot_emptiedd] = "0";
+//   }
+  
+  
+//   return [new_slots_values, gems_earned]
+
+
+// }
+
+
+// function calculateBoard(slott, neww_slots_values) {
+//   var new_slots_values = neww_slots_values
+//   var slot = slott
+//   // var new_slots_values = {
+//   //   "1": "5",
+//   //   "2": "5",
+//   //   "3": "5",
+//   //   "4": "5",
+//   //   "5": "5",
+//   //   "6": "5",
+//   //   "7": "5",
+//   //   "8": "5",
+//   //   "9": "5",
+//   //   "10": "5",
+//   //   "11": "5",
+//   //   "12": "5",
+//   //   "13": "5",
+//   //   "14": "5"
+//   // };
+
+//   let x;
+//   let y;
+//   let counterrrrrrr = 1;
+//                                                                                         // let pre_slot;
+//   let old_slot_emptied; 
+//   let slot_emptiedd = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   let slot_emptied = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   let slot_emptieddd = slot_emptiedd
+//   new_slots_values[slot] = "0";
+
+//   while (slot_emptied > 14) {
+//       slot_emptied -= 14;
+//   }
+//   while (slot_emptiedd > 14) {
+//       slot_emptiedd -= 14;
+//   }
+
+//   while (new_slots_values[slot_emptiedd] != "0") {
+
+//       if (counterrrrrrr == 1){
+//           x = slot+1
+//           y = slot_emptieddd-1
+          
+//       }
+//       // else if (counterrrrrrr == 2){
+//       //     x = slot_emptied+1
+//       //     y = slot_emptied + Number(slot)
+//       //     slot_emptied = y+1
+//       // }
+//       else {
+//           x = slot_emptied+1
+//           y = slot_emptied + Number(slot)
+//           slot_emptied = y+1
+//       }
+
+//       // while (y > 14) {
+//       //     y = y - 14
+//       //     slot_emptied = y+1
+//       // } 
+//       while (x > 14) {
+//           x = x - 14
+//           // slot_emptied = y+1
+//       } 
+
+//       for (var i = x; i <= y; i++) {
+//         new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//             let numKey = parseInt(key);
+//             new_slots_values[key] = "0";
+//             let newKey = (numKey - 14).toString();
+//             new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//             delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptied = y+1
+//       } 
+      
+//       // old_slot_emptied = slot_emptied
+//       // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//       if (slot_emptied > 14) {
+//           slot_emptied = slot_emptied - 14
+//       } 
+//       slot = new_slots_values[slot_emptied]
+//       new_slots_values[slot_emptied] = "0";
+      
+//       slot_emptiedd = slot_emptied + Number(slot) + 1
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd -14
+//       }
+//       // value=new_slots_values[slot_emptied]
+//       counterrrrrrr = counterrrrrrr + 1; 
+//   }
+
+//   if (counterrrrrrr != 1){
+//     x = slot_emptied+1
+//     y = slot_emptied + Number(slot)
+//     slot_emptied = y+1
+
+
+//     // while (x > 14) {
+//     //     x = x - 14
+//     //     // slot_emptied = y+1
+//     // } 
+
+//     for (var i = x; i <= y; i++) {
+//       new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//     }
+
+//     for (let key in new_slots_values) {
+//         if (new_slots_values[key] === "NaN") {
+//           let numKey = parseInt(key);
+//           new_slots_values[key] = "0";
+//           let newKey = (numKey - 14).toString();
+//           new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//           delete new_slots_values[key];
+//         }
+//     }
+
+//     while (y > 14) {
+//         y = y - 14
+//         slot_emptied = y+1
+//     } 
+
+//     // old_slot_emptied = slot_emptied
+//     // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//     if (slot_emptied > 14) {
+//         slot_emptied = slot_emptied - 14
+//     } 
+//     slot = new_slots_values[slot_emptied]
+//     new_slots_values[slot_emptied] = "0";
+
+//     slot_emptiedd = slot_emptied + Number(slot) + 1
+//     while (slot_emptiedd >14) {
+//         slot_emptiedd = slot_emptiedd-14
+//     }
+
+
+//     while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+
+
+//     var other_side_slot = 14-slot_emptiedd
+//     var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//     new_slots_values[other_side_slot+1] = "0";
+//     new_slots_values[slot_emptiedd] = "0";
+//   }
+
+//   else {
+
+//       x = Number(slot)+1
+//       y=slot_emptieddd
+
+//       for (var i = x; i <= y; i++) {
+//           new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//               let numKey = parseInt(key);
+//               new_slots_values[key] = "0";
+//               let newKey = (numKey - 14).toString();
+//               new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//               delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptiedd = y+1
+//       } 
+
+
+//       while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+  
+//       var other_side_slot = 14-slot_emptiedd
+//       var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//       new_slots_values[other_side_slot+1] = "0";
+//       new_slots_values[slot_emptiedd] = "0";
+//   }
+  
+  
+//   return [new_slots_values, gems_earned]
+
+
+// }
+
+
+// function calculateBoard(slot, neww_slots_values) {
+//   var new_slots_values = neww_slots_values
+//   // var new_slots_values = {
+//   //   "1": "5",
+//   //   "2": "5",
+//   //   "3": "5",
+//   //   "4": "5",
+//   //   "5": "5",
+//   //   "6": "5",
+//   //   "7": "5",
+//   //   "8": "5",
+//   //   "9": "5",
+//   //   "10": "5",
+//   //   "11": "5",
+//   //   "12": "5",
+//   //   "13": "5",
+//   //   "14": "5"
+//   // };
+
+//   let x;
+//   let y;
+//   let counterrrrrrr = 1;
+//                                                                                         // let pre_slot;
+//   let old_slot_emptied; 
+//   let slot_emptiedd = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   let slot_emptied = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+//   new_slots_values[slot] = "0";
+
+
+//   while (new_slots_values[slot_emptiedd] != "0") {
+
+//       if (counterrrrrrr == 1){
+//           x = Number(slot)+1
+//           y = slot_emptied-1
+//       }
+//       // else if (counterrrrrrr == 2){
+//       //     x = slot_emptied+1
+//       //     y = slot_emptied + Number(slot)
+//       //     slot_emptied = y+1
+//       // }
+//       else{
+//           x = slot_emptied+1
+//           y = slot_emptied + Number(slot)
+//           slot_emptied = y+1
+//       }
+
+//       // while (y > 14) {
+//       //     y = y - 14
+//       //     slot_emptied = y+1
+//       // } 
+//       while (x > 14) {
+//           x = x - 14
+//           // slot_emptied = y+1
+//       } 
+
+//       for (var i = x; i <= y; i++) {
+//         new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//             let numKey = parseInt(key);
+//             new_slots_values[key] = "0";
+//             let newKey = (numKey - 14).toString();
+//             new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//             delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptied = y+1
+//       } 
+      
+//       // old_slot_emptied = slot_emptied
+//       // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//       if (slot_emptied > 14) {
+//           slot_emptied = slot_emptied - 14
+//       } 
+//       var slot = new_slots_values[slot_emptied]
+//       new_slots_values[slot_emptied] = "0";
+      
+//       slot_emptiedd = slot_emptied + Number(slot) + 1
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd -14
+//       }
+//       // value=new_slots_values[slot_emptied]
+//       counterrrrrrr = counterrrrrrr + 1; 
+//   }
+
+//   if (counterrrrrrr != 1){
+//     x = slot_emptied+1
+//     y = slot_emptied + Number(slot)
+//     slot_emptied = y+1
+
+
+//     while (x > 14) {
+//         x = x - 14
+//         // slot_emptied = y+1
+//     } 
+
+//     for (var i = x; i <= y; i++) {
+//       new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//     }
+
+//     for (let key in new_slots_values) {
+//         if (new_slots_values[key] === "NaN") {
+//           let numKey = parseInt(key);
+//           new_slots_values[key] = "0";
+//           let newKey = (numKey - 14).toString();
+//           new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//           delete new_slots_values[key];
+//         }
+//     }
+
+//     while (y > 14) {
+//         y = y - 14
+//         slot_emptied = y+1
+//     } 
+
+//     // old_slot_emptied = slot_emptied
+//     // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//     if (slot_emptied > 14) {
+//         slot_emptied = slot_emptied - 14
+//     } 
+//     var slot = new_slots_values[slot_emptied]
+//     new_slots_values[slot_emptied] = "0";
+
+//     slot_emptiedd = slot_emptied + Number(slot) + 1
+//     while (slot_emptiedd >14) {
+//         slot_emptiedd = slot_emptiedd -14
+//     }
+
+//     var other_side_slot = 14-slot_emptiedd
+//     var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//     new_slots_values[other_side_slot+1] = "0";
+//     new_slots_values[slot_emptiedd] = "0";
+//   }
+  
+//   return [new_slots_values, gems_earned]
+
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function updateBoard(slots, gemsEarned, room) {
   room.gameState.slotBoard = slots;
@@ -381,6 +992,7 @@ function updateBoard(slots, gemsEarned, room) {
 
 function action(socketId) {
   return (data) => {
+    let sltts = {};
     // console.log(socketId)
     const room = rooms[getPlayerRoomId(socketId)];
 
@@ -399,21 +1011,88 @@ function action(socketId) {
       //   var fshkjdfh = data.gridIndex[0]
       // }
       if (room.gameState.board[data.gridIndex] == null) {
-        room.gameState.board[ data.gridIndex] = player;
+        // let gemsE = 1;
+        let dict = {};
+        
+        room.gameState.board[data.gridIndex] = player;
         console.log(room.gameState.board);
         for (const key in room.gameState.board) {
           if (room.gameState.board[key] == player) {
             console.log('=====================================================================')
             console.log('=====================================================================')
-            let [slts, gemsE] = calculateBoard(Number(key) + 1, "5")
+            console.log('hi, '+room.gameState.slotBoard[String(Number(key)+1)]);
+            
+            if (player == room.gameState.flippedPlayer) {
+              dict = room.gameState.slotBoard
+              sltts = {
+                "1": dict["8"],
+                "2": dict["9"],
+                "3": dict["10"],
+                "4": dict["11"],
+                "5": dict["12"],
+                "6": dict["13"],
+                "7": dict["14"],
+                "8": dict["1"],
+                "9": dict["2"],
+                "10": dict["3"],
+                "11": dict["4"],
+                "12": dict["5"],
+                "13": dict["6"],
+                "14": dict["7"]
+              }
+              console.log("90000000007098090")
+              var [dictt, gemsE] = calculateBoard(Number(key), sltts)
+              dict = dictt
+              sltts = {
+                "1": dict["8"],
+                "2": dict["9"],
+                "3": dict["10"],
+                "4": dict["11"],
+                "5": dict["12"],
+                "6": dict["13"],
+                "7": dict["14"],
+                "8": dict["1"],
+                "9": dict["2"],
+                "10": dict["3"],
+                "11": dict["4"],
+                "12": dict["5"],
+                "13": dict["6"],
+                "14": dict["7"]
+              }
 
-            updateBoard(slts, gemsE, room)
+              console.log("asjdfhgjsl")
+
+            } else {
+              dict = room.gameState.slotBoard
+              var sltttts = {
+                "1": dict["8"],
+                "2": dict["9"],
+                "3": dict["10"],
+                "4": dict["11"],
+                "5": dict["12"],
+                "6": dict["13"],
+                "7": dict["14"],
+                "8": dict["1"],
+                "9": dict["2"],
+                "10": dict["3"],
+                "11": dict["4"],
+                "12": dict["5"],
+                "13": dict["6"],
+                "14": dict["7"]
+              }
+              console.log("asjdfhgjsl")
+              var [slttts, gemsE] = calculateBoard(Number(key), sltttts)
+              sltts = slttts
+            }
+            // -------------------------------------------------------------------------------------------------------------
+            updateBoard(sltts, gemsE, room)
+            
           }
           console.log('=============dasssssssss========================================================')
           console.log('===============adsasdasdasd======================================================')
         }
         room.gameState.currentPlayer = room.gameState.players.find(p => p !== player);
-
+        room.gameState.board[data.gridIndex] = null
         // // // // // / ////// / / / / / /// checkForEndOfGame(room);
       }
 
@@ -435,6 +1114,415 @@ function action(socketId) {
     // io.to(socketId).emit(/* ... */);
     io.to(room.id).emit('gameState', room.gameState);
   }
+}
+
+
+
+// function calculateBoard(slott, neww_slots_values) {
+//   var new_slots_values = neww_slots_values
+//   var slot = slott
+//   // var new_slots_values = {
+//   //   "1": "5",
+//   //   "2": "5",
+//   //   "3": "5",
+//   //   "4": "5",
+//   //   "5": "5",
+//   //   "6": "5",
+//   //   "7": "5",
+//   //   "8": "5",
+//   //   "9": "5",
+//   //   "10": "5",
+//   //   "11": "5",
+//   //   "12": "5",
+//   //   "13": "5",
+//   //   "14": "5"
+//   // };
+
+//   let x;
+//   let y;
+//   let counterrrrrrr = 1;
+//                                                                                         // let pre_slot;
+//   let old_slot_emptied; 
+//   let slot_emptiedd = slot + Number(new_slots_values[slot]) + 1;
+//   let slot_emptied = slot + Number(new_slots_values[slot]) + 1;
+//   let slot_emptieddd = slot_emptiedd
+//   new_slots_values[slot] = "0";
+
+//   while (slot_emptied > 14) {
+//       slot_emptied -= 14;
+//   }
+//   while (slot_emptiedd > 14) {
+//       slot_emptiedd -= 14;
+//   }
+
+//   while (new_slots_values[slot_emptiedd] != "0") {
+
+//       if (counterrrrrrr == 1){
+//           x = slot+1
+//           y = slot_emptieddd-1
+          
+//       }
+//       // else if (counterrrrrrr == 2){
+//       //     x = slot_emptied+1
+//       //     y = slot_emptied + Number(slot)
+//       //     slot_emptied = y+1
+//       // }
+//       else {
+//           x = slot_emptied+1
+//           y = slot_emptied + Number(slot)
+//           slot_emptied = y+1
+//       }
+
+//       // while (y > 14) {
+//       //     y = y - 14
+//       //     slot_emptied = y+1
+//       // } 
+//       // while (x > 14) {
+//       //     x = x - 14
+//       //     // slot_emptied = y+1
+//       // } 
+
+//       for (var i = x; i <= y; i++) {
+//         new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//             let numKey = parseInt(key);
+//             new_slots_values[key] = "0";
+//             let newKey = (numKey - 14).toString();
+//             new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//             delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptied = y+1
+//       } 
+      
+//       // old_slot_emptied = slot_emptied
+//       // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//       if (slot_emptied > 14) {
+//           slot_emptied = slot_emptied - 14
+//       } 
+//       slot = new_slots_values[slot_emptied]
+//       new_slots_values[slot_emptied] = "0";
+      
+//       slot_emptiedd = slot_emptied + Number(slot) + 1
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd -14
+//       }
+//       // value=new_slots_values[slot_emptied]
+//       counterrrrrrr = counterrrrrrr + 1; 
+//   }
+
+//   if (counterrrrrrr != 1){
+//     x = slot_emptied+1
+//     y = slot_emptied + Number(slot)
+//     slot_emptied = y+1
+
+
+//     while (x > 14) {
+//         x = x - 14
+//         // slot_emptied = y+1
+//     } 
+
+//     for (var i = x; i <= y; i++) {
+//       new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//     }
+
+//     for (let key in new_slots_values) {
+//         if (new_slots_values[key] === "NaN") {
+//           let numKey = parseInt(key);
+//           new_slots_values[key] = "0";
+//           let newKey = (numKey - 14).toString();
+//           new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//           delete new_slots_values[key];
+//         }
+//     }
+
+//     while (y > 14) {
+//         y = y - 14
+//         slot_emptied = y+1
+//     } 
+
+//     // old_slot_emptied = slot_emptied
+//     // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+//     if (slot_emptied > 14) {
+//         slot_emptied = slot_emptied - 14
+//     } 
+//     slot = new_slots_values[slot_emptied]
+//     new_slots_values[slot_emptied] = "0";
+
+//     slot_emptiedd = slot_emptied + Number(slot) + 1
+//     while (slot_emptiedd >14) {
+//         slot_emptiedd = slot_emptiedd-14
+//     }
+
+
+//     while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+
+
+//     var other_side_slot = 14-slot_emptiedd
+//     var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//     new_slots_values[other_side_slot+1] = "0";
+//     new_slots_values[slot_emptiedd] = "0";
+//   }
+
+//   else {
+
+//       x = Number(slot)+1
+//       y=slot_emptieddd
+
+//       for (var i = x; i <= y; i++) {
+//           new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+//       }
+
+//       for (let key in new_slots_values) {
+//           if (new_slots_values[key] === "NaN") {
+//               let numKey = parseInt(key);
+//               new_slots_values[key] = "0";
+//               let newKey = (numKey - 14).toString();
+//               new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+//               delete new_slots_values[key];
+//           }
+//       }
+
+//       while (y > 14) {
+//           y = y - 14
+//           slot_emptiedd = y+1
+//       } 
+
+
+//       while (new_slots_values[slot_emptiedd] == "0") {
+//           slot_emptiedd= slot_emptiedd + 1;
+//       }
+
+//       while (slot_emptiedd >14) {
+//           slot_emptiedd = slot_emptiedd-14
+//       }
+  
+//       var other_side_slot = 14-slot_emptiedd
+//       var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+//       new_slots_values[other_side_slot+1] = "0";
+//       new_slots_values[slot_emptiedd] = "0";
+//   }
+  
+  
+//   return [new_slots_values, gems_earned]
+
+
+// }
+
+
+function calculateBoard(slott, neww_slots_values) {
+  var new_slots_values = neww_slots_values
+  var slot = slott
+  // var new_slots_values = {
+  //   "1": "5",
+  //   "2": "5",
+  //   "3": "5",
+  //   "4": "5",
+  //   "5": "5",
+  //   "6": "5",
+  //   "7": "5",
+  //   "8": "5",
+  //   "9": "5",
+  //   "10": "5",
+  //   "11": "5",
+  //   "12": "5",
+  //   "13": "5",
+  //   "14": "5"
+  // };
+
+  let x;
+  let y;
+  let counterrrrrrr = 1;
+                                                                                        // let pre_slot;
+  let old_slot_emptied; 
+  let slot_emptiedd = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+  let slot_emptied = Number(slot) + Number(new_slots_values[Number(slot)]) + 1;
+  let slot_emptieddd = slot_emptiedd-1
+  new_slots_values[slot] = "0";
+
+  while (slot_emptied > 14) {
+      slot_emptied -= 14;
+  }
+  while (slot_emptiedd > 14) {
+      slot_emptiedd -= 14;
+  }
+
+  while (new_slots_values[slot_emptiedd] != "0") {
+
+      if (counterrrrrrr == 1){
+          x = slot+1
+          y = slot_emptieddd-1
+          
+      }
+      // else if (counterrrrrrr == 2){
+      //     x = slot_emptied+1
+      //     y = slot_emptied + Number(slot)
+      //     slot_emptied = y+1
+      // }
+      else {
+          x = slot_emptied+1
+          y = slot_emptied + Number(slot)
+          slot_emptied = y+1
+      }
+
+      // while (y > 14) {
+      //     y = y - 14
+      //     slot_emptied = y+1
+      // } 
+      // while (x > 14) {
+      //     x = x - 14
+      //     // slot_emptied = y+1
+      // } 
+
+      for (var i = x; i <= y; i++) {
+        new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+      }
+
+      for (let key in new_slots_values) {
+          if (new_slots_values[key] === "NaN") {
+            let numKey = parseInt(key);
+            new_slots_values[key] = "0";
+            let newKey = (numKey - 14).toString();
+            new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+            delete new_slots_values[key];
+          }
+      }
+
+      while (y > 14) {
+          y = y - 14
+          slot_emptied = y+1
+      } 
+      
+      // old_slot_emptied = slot_emptied
+      // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+      if (slot_emptied > 14) {
+          slot_emptied = slot_emptied - 14
+      } 
+      slot = new_slots_values[slot_emptied]
+      new_slots_values[slot_emptied] = "0";
+      
+      slot_emptiedd = slot_emptied + Number(slot) + 1
+      while (slot_emptiedd >14) {
+          slot_emptiedd = slot_emptiedd -14
+      }
+      // value=new_slots_values[slot_emptied]
+      counterrrrrrr = counterrrrrrr + 1; 
+  }
+
+  if (counterrrrrrr != 1){
+    x = slot_emptied+1
+    y = slot_emptied + Number(slot)
+    slot_emptied = y+1
+
+
+    while (x > 14) {
+        x = x - 14
+        // slot_emptied = y+1
+    } 
+
+    for (var i = x; i <= y; i++) {
+      new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+    }
+
+    for (let key in new_slots_values) {
+        if (new_slots_values[key] === "NaN") {
+          let numKey = parseInt(key);
+          new_slots_values[key] = "0";
+          let newKey = (numKey - 14).toString();
+          new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+          delete new_slots_values[key];
+        }
+    }
+
+    while (y > 14) {
+        y = y - 14
+        slot_emptied = y+1
+    } 
+
+    // old_slot_emptied = slot_emptied
+    // slot_emptied = slot_emptied + Number(new_slots_values[slot_emptied]) + 1 
+    if (slot_emptied > 14) {
+        slot_emptied = slot_emptied - 14
+    } 
+    slot = new_slots_values[slot_emptied]
+    new_slots_values[slot_emptied] = "0";
+
+    slot_emptiedd = slot_emptied + Number(slot) + 1
+    while (slot_emptiedd >14) {
+        slot_emptiedd = slot_emptiedd-14
+    }
+
+
+    while (new_slots_values[slot_emptiedd] == "0") {
+          slot_emptiedd= slot_emptiedd + 1;
+      }
+
+      while (slot_emptiedd >14) {
+          slot_emptiedd = slot_emptiedd-14
+      }
+
+
+    var other_side_slot = 14-slot_emptiedd
+    var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+    new_slots_values[other_side_slot+1] = "0";
+    new_slots_values[slot_emptiedd] = "0";
+  }
+
+  else {
+
+      x = Number(slot)+1
+      y=slot_emptieddd
+
+      for (var i = x; i <= y; i++) {
+          new_slots_values[i] = String(Number(new_slots_values[i]) + 1);
+      }
+
+      for (let key in new_slots_values) {
+          if (new_slots_values[key] === "NaN") {
+              let numKey = parseInt(key);
+              new_slots_values[key] = "0";
+              let newKey = (numKey - 14).toString();
+              new_slots_values[newKey] = (parseInt(new_slots_values[newKey]) + 1).toString();
+              delete new_slots_values[key];
+          }
+      }
+
+      while (y > 14) {
+          y = y - 14
+          slot_emptiedd = y+1
+      } 
+
+
+      // while (new_slots_values[slot_emptiedd] == "0") {
+      //     slot_emptiedd= slot_emptiedd + 1;
+      // }
+
+      while (slot_emptiedd >14) {
+          slot_emptiedd = slot_emptiedd-14
+      }
+  
+      var other_side_slot = 14-slot_emptiedd
+      var gems_earned = Number(new_slots_values[slot_emptiedd]) + Number(new_slots_values[other_side_slot+1])
+      new_slots_values[other_side_slot+1] = "0";
+      new_slots_values[slot_emptiedd] = "0";
+  }
+  
+  
+  return [new_slots_values, gems_earned]
+
+
 }
 
 
