@@ -62,7 +62,7 @@ var slotsValues = {
   "14": "5"
 };
 
-var FlippedSlotsValues = {}
+// var FlippedSlotsValues = {}
 
 function createRoom() {
   const room = {
@@ -992,7 +992,7 @@ function updateBoard(slots, gemsEarned, room) {
 
 function action(socketId) {
   return (data) => {
-    let sltts = {};
+    // let sltts = {};
     // console.log(socketId)
     const room = rooms[getPlayerRoomId(socketId)];
 
@@ -1022,69 +1022,70 @@ function action(socketId) {
             console.log('=====================================================================')
             console.log('hi, '+room.gameState.slotBoard[String(Number(key)+1)]);
             
-            if (player == room.gameState.flippedPlayer) {
-              dict = room.gameState.slotBoard
-              sltts = {
-                "1": dict["8"],
-                "2": dict["9"],
-                "3": dict["10"],
-                "4": dict["11"],
-                "5": dict["12"],
-                "6": dict["13"],
-                "7": dict["14"],
-                "8": dict["1"],
-                "9": dict["2"],
-                "10": dict["3"],
-                "11": dict["4"],
-                "12": dict["5"],
-                "13": dict["6"],
-                "14": dict["7"]
-              }
-              console.log("90000000007098090")
-              var [dictt, gemsE] = calculateBoard(Number(key), sltts)
-              dict = dictt
-              sltts = {
-                "1": dict["8"],
-                "2": dict["9"],
-                "3": dict["10"],
-                "4": dict["11"],
-                "5": dict["12"],
-                "6": dict["13"],
-                "7": dict["14"],
-                "8": dict["1"],
-                "9": dict["2"],
-                "10": dict["3"],
-                "11": dict["4"],
-                "12": dict["5"],
-                "13": dict["6"],
-                "14": dict["7"]
-              }
+            // if (player == room.gameState.flippedPlayer) {
+            //   dict = room.gameState.slotBoard
+            //   sltts = {
+            //     "1": dict["8"],
+            //     "2": dict["9"],
+            //     "3": dict["10"],
+            //     "4": dict["11"],
+            //     "5": dict["12"],
+            //     "6": dict["13"],
+            //     "7": dict["14"],
+            //     "8": dict["1"],
+            //     "9": dict["2"],
+            //     "10": dict["3"],
+            //     "11": dict["4"],
+            //     "12": dict["5"],
+            //     "13": dict["6"],
+            //     "14": dict["7"]
+            //   }
+            //   console.log("90000000007098090")
+            //   var [dictt, gemsE] = calculateBoard(Number(key), sltts)
+            //   dict = dictt
+            //   sltts = {
+            //     "1": dict["8"],
+            //     "2": dict["9"],
+            //     "3": dict["10"],
+            //     "4": dict["11"],
+            //     "5": dict["12"],
+            //     "6": dict["13"],
+            //     "7": dict["14"],
+            //     "8": dict["1"],
+            //     "9": dict["2"],
+            //     "10": dict["3"],
+            //     "11": dict["4"],
+            //     "12": dict["5"],
+            //     "13": dict["6"],
+            //     "14": dict["7"]
+            //   }
 
-              console.log("asjdfhgjsl")
+            //   console.log("asjdfhgjsl")
 
-            } else {
-              dict = room.gameState.slotBoard
-              var sltttts = {
-                "1": dict["8"],
-                "2": dict["9"],
-                "3": dict["10"],
-                "4": dict["11"],
-                "5": dict["12"],
-                "6": dict["13"],
-                "7": dict["14"],
-                "8": dict["1"],
-                "9": dict["2"],
-                "10": dict["3"],
-                "11": dict["4"],
-                "12": dict["5"],
-                "13": dict["6"],
-                "14": dict["7"]
-              }
-              console.log("asjdfhgjsl")
-              var [slttts, gemsE] = calculateBoard(Number(key), sltttts)
-              sltts = slttts
-            }
+            // } else {
+            //   dict = room.gameState.slotBoard
+            //   var sltttts = {
+            //     "1": dict["8"],
+            //     "2": dict["9"],
+            //     "3": dict["10"],
+            //     "4": dict["11"],
+            //     "5": dict["12"],
+            //     "6": dict["13"],
+            //     "7": dict["14"],
+            //     "8": dict["1"],
+            //     "9": dict["2"],
+            //     "10": dict["3"],
+            //     "11": dict["4"],
+            //     "12": dict["5"],
+            //     "13": dict["6"],
+            //     "14": dict["7"]
+            //   }
+            //   console.log("asjdfhgjsl")
+            //   var [slttts, gemsE] = calculateBoard(Number(key), sltttts)
+            //   sltts = slttts
+            // }
             // -------------------------------------------------------------------------------------------------------------
+            var [sltts, gemsE] = calculateBoard(Number(key), room.gameState.slotBoard)
             updateBoard(sltts, gemsE, room)
             
           }
@@ -1363,7 +1364,7 @@ function calculateBoard(slott, neww_slots_values) {
 
       if (counterrrrrrr == 1){
           x = slot+1
-          y = slot_emptieddd-1
+          y = slot_emptieddd
           
       }
       // else if (counterrrrrrr == 2){
