@@ -17,16 +17,16 @@ const Statuses = {
   WIN: 'win'
 }
 
-const winPatterns = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
+// const winPatterns = [
+//   [0, 1, 2],
+//   [3, 4, 5],
+//   [6, 7, 8],
+//   [0, 3, 6],
+//   [1, 4, 7],
+//   [2, 5, 8],
+//   [0, 4, 8],
+//   [2, 4, 6]
+// ]
 
 let gameState = {
   board: new Array(14).fill(null),
@@ -45,22 +45,22 @@ var roomCount = 0;
 // var thisGameId = (Math.random() * 100000) | 0;
 // var roomId;
 
-var slotsValues = {
-  "1": "5",
-  "2": "5",
-  "3": "5",
-  "4": "5",
-  "5": "5",
-  "6": "5",
-  "7": "5",
-  "8": "5",
-  "9": "5",
-  "10": "5",
-  "11": "5",
-  "12": "5",
-  "13": "5",
-  "14": "5"
-};
+// var slotsValues = {
+//   "1": "5",
+//   "2": "5",
+//   "3": "5",
+//   "4": "5",
+//   "5": "5",
+//   "6": "5",
+//   "7": "5",
+//   "8": "5",
+//   "9": "5",
+//   "10": "5",
+//   "11": "5",
+//   "12": "5",
+//   "13": "5",
+//   "14": "5"
+// };
 
 // var FlippedSlotsValues = {}
 
@@ -1111,6 +1111,33 @@ function action(socketId) {
     console.log('=====================================================================')
     console.dir(rooms, { depth: null });
     console.log('=====================================================================')
+
+
+
+
+
+
+    if (checkSlotBoard(room.gameState.slotBoard) === true) {
+      for (let key in room.gameState.slotBoard) {
+        if (room.gameState.slotBoard[key] === "1") {
+          if (key > 7) {
+            room.gameState.slotBoard[key] = "0"
+            room.gameState.players[0].numberOfGems = room.gameState.players[0].numberOfGems + 1
+          }
+
+          if (key <= 7) {
+            room.gameState.slotBoard[key] = "0"
+            room.gameState.players[1].numberOfGems = room.gameState.players[1].numberOfGems + 1
+          }
+        }
+      }
+
+    }
+
+
+
+
+
     checkForEndOfGame(room);
     // io.to(socketId).emit(/* ... */);
     io.to(room.id).emit('gameState', room.gameState);
@@ -1570,6 +1597,21 @@ function disconnect(socketId) {
   // }
 }
 
+
+function checkSlotBoard(slotBoard) {
+  let count = 0;
+  for (let key in slotBoard) {
+    if (slotBoard[key] === "1") {
+      count++;
+      if (count > 1) {
+        return false;
+      }
+    } else if (slotBoard[key] !== "0") {
+      return false;
+    }
+  }
+  return true;
+}
 
 function checkForEndOfGame(room) {
 
