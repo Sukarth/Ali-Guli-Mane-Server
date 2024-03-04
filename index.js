@@ -4,8 +4,9 @@ const sockets = require('socket.io')
 const server = http.createServer();
 const io = sockets(server, {
   cors: {
-    origin: "https://v9djdb27-5500.euw.devtunnels.ms",
-    methods: ["GET", "POST"]
+    origin: "https://48npr6ll-5500.euw.devtunnels.ms",
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
