@@ -4,7 +4,7 @@ const sockets = require('socket.io')
 const server = http.createServer();
 const io = sockets(server, {
   cors: {
-    origin: "https://alu-guli-mane-player.onrender.com",
+    origin: "https://48npr6ll-5500.euw.devtunnels.ms",
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -108,7 +108,7 @@ io.on('connection', function(connection) {
   connection.on('addPlayer', addPlayer(connection));
   connection.on('action', action(connection.id));
   connection.on('rematch', rematch(connection.id));
-  // connection.on('disconnect', disconnect(connection.id));
+  connection.on('disconnect', disconnect(connection.id));
   // connection.on('updateBoard', update(connection.id));
   // contt = connection
 
@@ -169,13 +169,13 @@ function addPlayer(sockett) {
     // console.dir(rooms, { depth: null });
     console.log(rooms)
     // console.log('=====================================================================')
-    let nextSymbol = 'X';
+    // let nextSymbol = 'X';
 
 
     const newPlayer = {
       playerName: data.playerName,
       id: sockett.id,
-      symbol: nextSymbol,
+      // symbol: nextSymbol,
       numberOfGems: 0
     };
 
@@ -1566,36 +1566,74 @@ function rematch(socketId) {
 }
 
 
-function resetGame() {
-  gameState.board = new Array(14).fill(null);
+function resetGame(room) {
+  room.gameState.slotBoard = {
+    "1": "5",
+    "2": "5",
+    "3": "5",
+    "4": "5",
+    "5": "5",
+    "6": "5",
+    "7": "5",
+    "8": "5",
+    "9": "5",
+    "10": "5",
+    "11": "5",
+    "12": "5",
+    "13": "5",
+    "14": "5",
+  };
+  room.gameState.currentPlayer = null;
+  room.gameState.flippedPlayer = null;
+  room.gameState.result.status = Statuses.WAITING;
+  console.dir(room.gameState, { depth: null });
 
-  if (gameState.players.length === 2) {
-    gameState.result.status = Statuses.PLAYING;
-    const randPlayer = Math.floor(Math.random() * gameState.players.length);
-    gameState.currentPlayer = gameState.players[randPlayer];
-  } else {
-    gameState.result.status = Statuses.WAITING;
-    gameState.currentPlayer = null;
+ 
+
+  if (room.gameState.players !== null) {
+
+    if (room.gameState.players.length === 2) {
+      room.gameState.result.status = Statuses.PLAYING;
+      const randPlayer = Math.floor(Math.random() * room.gameState.players.length);
+      room.gameState.currentPlayer = room.gameState.players[randPlayer];
+      room.gameState.flippedPlayer = room.gameState.currentPlayer;
+    }
   }
+  //   } else {
+  //     room.gameState.result.status = Statuses.WAITING;
+  //     room.gameState.currentPlayer = null;
+  //   }
+    
+  // } else {
+  //   room.gameState.result.status = Statuses.WAITING;
+  //   room.gameState.currentPlayer = null;
+  // }
 }
 
 
 function disconnect(socketId) {
-  return
+  console.log('=====================================================================')
+  console.log('Player Disconnected. Socket Id, gameState:')
+  console.log('=====================================================================')
+  console.log(socketId)
+  // return
   ///////////////////////////////////////////TODO
-  // return (reason) => {
-  //   console.log('=====================================================================')
-  //   console.log('Disconnected. Socket Id, gameState:')
-  //   console.log('=====================================================================')
-  //   console.log(socketId)
-  //   console.dir(room.gameState, { depth: null });
-  //   room.gameState.players = room.gameState.players.filter(p => p.id != socketId);
-  //   if (gameState.players !== 2){
-  //     gameState.players = null
-  //     resetGame();
-  //     io.emit('gameState', gameState);
-  //   }
-  // }
+  return (reason) => {
+    console.log('=====================================================================')
+    console.log('Player Disconnected. Socket Id, gameState:')
+    console.log('=====================================================================')
+    console.log(socketId)
+    var room = rooms[getPlayerRoomId(socketId)]
+    console.dir(room.gameState, { depth: null });
+    room.gameState.players = room.gameState.players.filter(p => p.id != socketId);
+    if (room.gameState.players.length !== 2){
+      if (room.gameState.players.length !== 0) {
+        room.gameState.players[0].numberOfGems = 0
+      }
+      resetGame(room);
+      io.to(room.id).emit('gameState', room.gameState);
+    }
+  }
 }
 
 
@@ -1632,6 +1670,6 @@ function checkForEndOfGame(room) {
 
 }
 
-server.listen(10000, function() {
-  console.log('listening on 10000');
+server.listen(3000, function() {
+  console.log('listening on 3000');
 });
