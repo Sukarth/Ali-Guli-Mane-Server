@@ -4,7 +4,8 @@ const sockets = require('socket.io')
 const server = http.createServer();
 const io = sockets(server, {
   cors: {
-    origin: "https://48npr6ll-5500.euw.devtunnels.ms",
+    // origin: "https://48npr6ll-5500.euw.devtunnels.ms",
+    origin: "https://alu-guli-mane-player.onrender.com/",
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -65,9 +66,19 @@ var roomCount = 0;
 
 // var FlippedSlotsValues = {}
 
+function findSmallestUnusedRoomId(rooms) {
+  let smallestNum = 0;
+  while (rooms.hasOwnProperty(smallestNum.toString())) {
+    smallestNum++;
+  }
+  return smallestNum;
+}
+
+
+
 function createRoom() {
   const room = {
-    id: roomCount++,
+    id: findSmallestUnusedRoomId(rooms),
     gameState: {
       board: new Array(14).fill(null),
       slotBoard: {
@@ -140,6 +151,32 @@ io.on('connection', function(connection) {
 // }
 
 
+
+
+
+
+
+
+
+
+
+
+
+//sets room numbers to starting from zero (to ascend from zero)
+
+// function addIdToObjectMap(objMap) {
+//   const updatedObjectMap = {};
+//   Object.values(objMap).forEach((obj, index) => {
+//       updatedObjectMap[index] = { ...obj, id: index };
+//   });
+//   return updatedObjectMap;
+// }
+
+
+
+
+
+
 function addPlayer(sockett) {
   return (data) => {
     // const numberOfPlayers = gameState.players.length;
@@ -152,15 +189,19 @@ function addPlayer(sockett) {
     let room = null;
 
     for (const roomId in rooms) {
-      if (rooms[roomId].gameState.players.length <= 2) {
+      if (rooms[roomId].gameState.players.length < 2) {
         room = rooms[roomId];
         break;
       }
+      else if (rooms[roomId].gameState.players.length == 2) {
+        continue
+      }
+      
     }
 
     if (!room) {
       room = createRoom();
-      // console.log('hi')
+      console.log('hi')
     }
 
     console.log('=====================================================================')
@@ -209,6 +250,16 @@ function addPlayer(sockett) {
       room.gameState.currentPlayer = newPlayer;
       room.gameState.flippedPlayer = newPlayer;
     }
+
+    for (const roomId in rooms) {
+      if (rooms[roomId].gameState.players.length == 0) {
+        delete rooms[roomId]
+        break;
+      }     
+    }
+
+    // rooms = addIdToObjectMap(rooms)
+    
     console.log('=====================================================================')
     console.log('Rooms and gameState:')
     console.log('=====================================================================')
@@ -217,6 +268,10 @@ function addPlayer(sockett) {
     console.dir(rooms, { depth: null });
     // console.log('=====================================================================')
     // console.log(rooms)
+
+
+
+
     sockett.join(room.id);
     io.to(room.id).emit('gameState', room.gameState);
   }
@@ -1633,6 +1688,22 @@ function disconnect(socketId) {
       resetGame(room);
       io.to(room.id).emit('gameState', room.gameState);
     }
+
+    for (const roomId in rooms) {
+      if (rooms[roomId].gameState.players.length == 0) {
+        delete rooms[roomId]
+        break;
+      }     
+    }
+
+    // rooms = addIdToObjectMap(rooms)
+
+    console.log('=====================================================================')
+    console.log('Rooms:')
+    console.log('=====================================================================')
+    console.dir(rooms, { depth: null });
+
+
   }
 }
 
