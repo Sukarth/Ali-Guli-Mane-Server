@@ -5,7 +5,7 @@ const server = http.createServer();
 const io = sockets(server, {
   cors: {
     // origin: "https://48npr6ll-5500.euw.devtunnels.ms",
-    origin: "https://alu-guli-mane-player.onrender.com/",
+    origin: "https://alu-guli-mane-player.onrender.com",
     methods: ["GET", "POST"],
     credentials: true
   }
